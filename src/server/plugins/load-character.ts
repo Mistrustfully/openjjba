@@ -7,7 +7,6 @@ function ReplaceRigParts(character: Instance) {
 
 	ReplicatedStorage.assets.CharacterRig.GetDescendants().forEach((part) => {
 		if (part.IsA("BasePart")) {
-			print(part.Name);
 			humanoid.ReplaceBodyPartR15(part.Name as CastsToEnum<Enum.BodyPartR15>, part.Clone());
 		}
 	});

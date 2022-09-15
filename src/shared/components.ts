@@ -26,3 +26,21 @@ export const Blocking = component<{ frame: number }>("Blocking", {
 export const Dodging = component<{ frame: number }>("Dodging", {
 	frame: 0,
 });
+
+type SpacialHitbox =
+	| {
+			type: "Radius";
+			position: Vector3;
+			size: number;
+	  }
+	| {
+			type: "Hitbox";
+			position: CFrame;
+			size: Vector3;
+	  };
+
+export const Hitbox = component<
+	SpacialHitbox & {
+		currentHit: Model[];
+	}
+>();
