@@ -3,12 +3,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import { component } from "@rbxts/matter";
-import { IPlayerData } from "shared/types/player-data";
 import { Move } from "./combat/moves";
 import { Item } from "./types/items";
 
-export const PlayerData = component<IPlayerData>("PlayerData");
-export const PlayerComponent = component<{ player: Player }>("PlayerComponent");
 export const LocalPlayerComponent = component<{ localplayer: Player }>("LocalPlayerComponent");
 export const PlayerLike = component("PlayerLike");
 

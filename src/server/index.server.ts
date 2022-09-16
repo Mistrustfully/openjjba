@@ -10,6 +10,8 @@ import { UseTags } from "./plugins/use-tags";
 import { LoadCharaterRig } from "./plugins/load-character";
 
 declare const script: { systems: Folder };
-const state: IServerState = {};
+const state: IServerState = {
+	PlayerData: new Map(),
+};
 
 start([script.systems, ReplicatedStorage.shared.systems], state)(LoadPlayerData, UseTags, LoadCharaterRig);
