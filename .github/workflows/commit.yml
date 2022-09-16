@@ -35,13 +35,10 @@ jobs:
           - name: Install NPM dependencies
             uses: bahmutov/npm-install@v1.7.4
 
-          - name: Setup Aftman
+          - name: Install Aftman
             uses: ok-nick/setup-aftman@v0.2.0
             with:
               token: ${{ SECRETS.GITHUB_TOKEN }}
-
-          - name: Install Aftman dependencies
-            run: aftman install
 
           - name: Compile
             run: npm run build
@@ -54,6 +51,6 @@ jobs:
             env: 
                 UID: 3941629277
                 PID: 10928616122
-                API_KEY: ${{ secrets.masterkey }}
+                API_KEY: ${{ SECRETS.MASTERKEY }}
                 FILE: place.rbxl
             run: rbxcloud experience publish -a "$API_KEY" -u "$UID" -p "$PID" -t published -f "$FILE"
