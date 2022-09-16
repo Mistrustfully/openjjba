@@ -41,7 +41,7 @@ jobs:
               token: ${{ SECRETS.GITHUB_TOKEN }}
 
           - name: Install Aftman dependencies
-            run: aftman Install
+            run: aftman install
 
           - name: Compile
             run: npm run build
