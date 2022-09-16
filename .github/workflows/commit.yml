@@ -24,3 +24,36 @@ jobs:
               uses: bahmutov/npm-install@v1.7.4
             - name: Compile
               run: npm run build
+
+    deploy:
+        name: deploy
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v3
+
+          - name: Install NPM dependencies
+            uses: bahmutov/npm-install@v1.7.4
+
+          - name: Setup Aftman
+            uses: ok-nick/setup-aftman@v0.2.0
+            with:
+              token: ${{ SECRETS.GITHUB_TOKEN }}
+
+          - name: Install Aftman dependencies
+            run: aftman Install
+
+          - name: Compile
+            run: npm run build
+
+          - name: Build to place file
+            run: rojo build -o place.rbxl
+
+          - name: Publish
+            shell: bash
+            env: 
+                UID: 3941629277
+                PID: 10928616122
+                API_KEY: ${{ secrets.masterkey }}
+                FILE: place.rbxl
+            run: rbxcloud experience publish -a "$API_KEY" -u "$UID" -p "$PID" -t published -f "$FILE"

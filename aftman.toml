@@ -1,2 +1,3 @@
 [tools]
 rojo = "rojo-rbx/rojo@7.1.0"
+rbxcloud = "Sleitnick/rbxcloud@0.2.1"
