@@ -24,6 +24,8 @@ export const Dodging = component<{ frame: number }>("Dodging", {
 	frame: 0,
 });
 
+export const Hovered = component("Hovered");
+
 type SpacialHitbox =
 	| {
 			type: "Radius";
@@ -40,4 +42,4 @@ export const Hitbox = component<
 	SpacialHitbox & {
 		currentHit: Model[];
 	}
->();
+>("Hitbox");
