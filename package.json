@@ -27,6 +27,7 @@
 	},
 	"dependencies": {
 		"@rbxts/flipper": "^2.0.1",
+		"@rbxts/gamejoy": "^1.1.4",
 		"@rbxts/matter": "^0.6.2-ts.0",
 		"@rbxts/net": "^3.0.3",
 		"@rbxts/plasma": "^0.4.1-ts.0",
