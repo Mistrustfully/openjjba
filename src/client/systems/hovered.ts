@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Christian Fletcher <mistrustfully@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 import { AnyComponent, AnyEntity, useEvent, World } from "@rbxts/matter";
 import { Players, UserInputService } from "@rbxts/services";
 import { Hovered } from "shared/components";

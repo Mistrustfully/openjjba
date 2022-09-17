@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Christian Fletcher <mistrustfully@gmail.com>
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 import Rodux from "@rbxts/rodux";
 import { RunService } from "@rbxts/services";
 import Remotes from "shared/remotes";

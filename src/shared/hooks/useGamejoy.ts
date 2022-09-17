@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Christian Fletcher <mistrustfully@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 import { useEvent, useHookState } from "@rbxts/matter";
 import { Context } from "@rbxts/gamejoy/out/";
 import { ActionLike, ContextOptions, RawActionEntry } from "@rbxts/gamejoy/out/Definitions/Types";

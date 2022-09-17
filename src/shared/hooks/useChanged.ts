@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Christian Fletcher <mistrustfully@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
 import { useHookState } from "@rbxts/matter";
 
 type storage<T> = { old?: T; newest?: T };
