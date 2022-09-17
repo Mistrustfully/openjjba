@@ -1,6 +1,5 @@
-import { Action } from "@rbxts/gamejoy/out/Actions";
 import { useEvent, useHookState } from "@rbxts/matter";
-import { Actions, Context } from "@rbxts/gamejoy/out/";
+import { Context } from "@rbxts/gamejoy/out/";
 import { ActionLike, ContextOptions, RawActionEntry } from "@rbxts/gamejoy/out/Definitions/Types";
 
 interface storage<Options extends ContextOptions, ActionContraint extends RawActionEntry> {
@@ -20,13 +19,12 @@ export function useGamejoyBind<Options extends ContextOptions, ActionContraint e
 	context: Context<Options>,
 	action: ActionLike<ActionContraint>,
 ) {
-	const storage = useHookState<storage<Options, ActionContraint>>(cleanup);
+	const storage = useHookState<storage<Options, ActionContraint>>(action, cleanup);
 	if (!storage.context) storage.context = context;
-	if (!storage.action) storage.action = action;
 	if (!storage.useEventBind) storage.useEventBind = new Instance("BindableEvent");
-
-	if (!context.Has(action as never)) {
-		context.Bind(action, () => {
+	if (!storage.action) {
+		storage.action = action;
+		context.Bind(storage.action, () => {
 			storage.useEventBind.Fire();
 		});
 	}

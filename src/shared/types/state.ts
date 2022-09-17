@@ -5,6 +5,9 @@
 import { AnyEntity } from "@rbxts/matter";
 import { DataRoduxStore } from "shared/rodux/data-store";
 import { UIStore } from "shared/rodux/ui-store";
+import { Context } from "@rbxts/gamejoy/";
+import { ActionLike, AnyAction, ContextOptions, RawActionEntry } from "@rbxts/gamejoy/out/Definitions/Types";
+import { DefaultKeybinds } from "shared/default-keybinds";
 
 export interface IClientState {
 	debugEnabled: boolean;
@@ -14,6 +17,9 @@ export interface IClientState {
 
 	UIStore: UIStore;
 	PlayerData: DataRoduxStore;
+
+	GamejoyContext: Context<ContextOptions>;
+	InputActions: typeof DefaultKeybinds;
 }
 
 export interface IServerState {

@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import { Context } from "@rbxts/gamejoy";
 import { ReplicatedStorage } from "@rbxts/services";
+import { DefaultKeybinds } from "shared/default-keybinds";
 import Remotes from "shared/remotes";
 import { CreateDataRoduxStore } from "shared/rodux/data-store";
 import { CreateUIStore } from "shared/rodux/ui-store";
@@ -22,6 +24,11 @@ const state: IClientState = {
 
 	UIStore: CreateUIStore(),
 	PlayerData: CreateDataRoduxStore(GetInitialStoreValue.CallServer()),
+
+	GamejoyContext: new Context({
+		ActionGhosting: 1,
+	}),
+	InputActions: DefaultKeybinds,
 };
 
 start([script.systems, ReplicatedStorage.shared.systems], state)(ReceiveReplication, CreateUI, RecieveDatastoreChanges);

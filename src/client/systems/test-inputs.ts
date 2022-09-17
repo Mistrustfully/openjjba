@@ -2,13 +2,11 @@ import { Context } from "@rbxts/gamejoy";
 import { Action, Sequence } from "@rbxts/gamejoy/out/Actions";
 import { World } from "@rbxts/matter";
 import { useGamejoyBind } from "shared/hooks/useGamejoy";
+import { IClientState } from "shared/types/state";
 
-const ctx = new Context({});
-const atn = new Sequence(["Q", "E"]);
-
-function a(world: World) {
-	for (const [_] of useGamejoyBind(ctx, atn)) {
-		print("used q");
+function a(world: World, state: IClientState) {
+	for (const [i] of useGamejoyBind(state.GamejoyContext, state.InputActions.Summon)) {
+		print(state.InputActions.Summon);
 	}
 }
 
