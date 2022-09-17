@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import { World } from "@rbxts/matter";
+import { DefaultKeybinds } from "shared/default-keybinds";
 
 export interface Move {
 	name: string;
 	cooldown: number;
 	onCooldown: boolean;
 
-	keybind: Enum.KeyCode;
+	keybind: keyof typeof DefaultKeybinds;
 
 	onServer: (this: Move, world: World) => void;
 	otherClients: (this: Move, world: World) => void;
@@ -25,7 +26,7 @@ const defaults: Move = {
 	name: "DefaultMove",
 	cooldown: 0,
 	onCooldown: false,
-	keybind: Enum.KeyCode.Q,
+	keybind: "Summon",
 
 	onClient(this) {
 		warn("OnClient not implemented for move " + this.name);
@@ -44,6 +45,7 @@ export const MoveData: { [index in Moves]: Partial<Move> } = {
 	[Moves.Summon]: {
 		name: "Summon",
 		cooldown: 0.5,
+		keybind: "Summon",
 	},
 
 	[Moves.Barrage]: {},

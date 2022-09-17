@@ -4,6 +4,7 @@
 
 import { Context } from "@rbxts/gamejoy";
 import { ReplicatedStorage } from "@rbxts/services";
+import { StandMoves } from "shared/combat/stand-moves";
 import { DefaultKeybinds } from "shared/default-keybinds";
 import Remotes from "shared/remotes";
 import { CreateDataRoduxStore } from "shared/rodux/data-store";
@@ -16,6 +17,8 @@ import { ReceiveReplication } from "./plugins/recieve-replication";
 
 declare const script: { systems: Folder };
 const GetInitialStoreValue = Remotes.Client.Get("GetDataRoduxStoreInitialData");
+const PlayerData = GetInitialStoreValue.CallServer();
+
 const state: IClientState = {
 	debugEnabled: false,
 
@@ -23,12 +26,14 @@ const state: IClientState = {
 	serverIdMap: new Map(),
 
 	UIStore: CreateUIStore(),
-	PlayerData: CreateDataRoduxStore(GetInitialStoreValue.CallServer()),
+	PlayerData: CreateDataRoduxStore(PlayerData),
 
 	GamejoyContext: new Context({
 		ActionGhosting: 1,
 	}),
 	InputActions: DefaultKeybinds,
+
+	Moveset: StandMoves[PlayerData.stand.id],
 };
 
 start([script.systems, ReplicatedStorage.shared.systems], state)(ReceiveReplication, CreateUI, RecieveDatastoreChanges);

@@ -34,7 +34,7 @@ function CameraFollowsTarget(world: World) {
 	const targetCharPosition = targetedChar.model.PrimaryPart.Position;
 
 	const distance = targetCharPosition.sub(charCFrame.Position).Magnitude;
-	const springedCameraOffset = useMotor(new Spring(distance > 30 ? 8 : 15, { frequency: 0.5 }), 8);
+	const springedCameraOffset = useMotor(new Spring(distance > 30 ? 8 : 15, { frequency: 0.5 }), 2);
 	const lookAtPostition = useGroupMotor(
 		[
 			new Spring(targetCharPosition.X, { frequency: 0.5 }),

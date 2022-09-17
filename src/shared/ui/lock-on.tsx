@@ -27,7 +27,12 @@ function LockOn() {
 	});
 
 	return (
-		<billboardgui Adornee={state.Target?.PrimaryPart} Size={new UDim2(0.75, 30, 0.75, 30)} AlwaysOnTop={true}>
+		<billboardgui
+			Adornee={state.Target?.PrimaryPart}
+			Size={new UDim2(0.75, 30, 0.75, 30)}
+			AlwaysOnTop={true}
+			ResetOnSpawn={false}
+		>
 			<imagelabel
 				Visible={state.Target === undefined ? false : true}
 				Size={UDim2.fromScale(1, 1)}
