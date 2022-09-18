@@ -11,13 +11,14 @@ function ProcessInputs(world: World, state: IClientState) {
 	const [localentity, moveset, _] = world.query(Moveset, LocalPlayer).next();
 	if (localentity === undefined || moveset === undefined) return;
 
-	moveset.moveset.forEach((move) => {
+	moveset.moveset.forEach((move, index) => {
 		for (const [_] of useGamejoyBind(state.GamejoyContext, state.InputActions[move.keybind])) {
-			print(move.name);
 			world.spawn(
 				MoveRunner({
 					owner: localentity,
 					move: move,
+					context: "Client",
+					index,
 				}),
 			);
 		}

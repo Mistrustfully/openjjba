@@ -15,7 +15,9 @@ const Remotes = Net.Definitions.Create({
 	PickupItem: Net.Definitions.ClientToServerEvent<[string]>(),
 
 	UseMove: Net.Definitions.ClientToServerEvent<[number]>(),
+	EndMove: Net.Definitions.ClientToServerEvent<[number]>(),
 	RecieveMove: Net.Definitions.ServerToClientEvent<[Stand, number]>(),
+
 	MoveCooldownEnded: Net.Definitions.ServerToClientEvent<[number]>(),
 
 	GetDataRoduxStoreInitialData: Net.Definitions.ServerFunction<() => IPlayerData>(),

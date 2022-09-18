@@ -50,5 +50,11 @@ export const CombatTag = component<{
 }>("CombatTag");
 
 export const DamageRequest = component<{ damage: number; owner: AnyEntity; target: AnyEntity }>("DamageRequest");
-export const MoveRunner = component<{ move: Move; owner: AnyEntity }>("MoveRunner");
+export const MoveRunner = component<{
+	move: Move;
+	owner: AnyEntity;
+	context: "Client" | "OtherClients" | "Server";
+	index: number;
+	clientDone?: boolean;
+}>("MoveRunner");
 export const Moveset = component<{ moveset: Move[] }>("Moveset");

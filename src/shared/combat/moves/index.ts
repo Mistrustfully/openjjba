@@ -13,7 +13,7 @@ export const enum MoveReturnTypes {
 }
 
 /// moveFn will be ran repeatedly until it returns false
-type moveFn = (this: Move, owner: AnyEntity, world: World) => boolean;
+type moveFn = (this: Move, owner: AnyEntity, world: World, clientDone?: boolean) => boolean;
 export interface Move {
 	name: string;
 	cooldown: number;

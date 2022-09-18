@@ -55,4 +55,9 @@ export const Teleport: Partial<Move> = {
 
 		return false;
 	},
+
+	onServer(this, owner, world, clientDone) {
+		print("hello world from server");
+		return !clientDone;
+	},
 };
