@@ -2,9 +2,18 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import { World } from "@rbxts/matter";
+import { AnyEntity, World } from "@rbxts/matter";
 import { DefaultKeybinds } from "shared/default-keybinds";
+import { Teleport } from "./teleport";
 
+export const enum MoveReturnTypes {
+	Failed, // Failed, don't retry, but don't set cooldown.
+	Continue, //
+	Destroy, //
+}
+
+/// moveFn will be ran repeatedly until it returns false
+type moveFn = (this: Move, owner: AnyEntity, world: World) => boolean;
 export interface Move {
 	name: string;
 	cooldown: number;
@@ -12,14 +21,15 @@ export interface Move {
 
 	keybind: keyof typeof DefaultKeybinds;
 
-	onServer: (this: Move, world: World) => void;
-	otherClients: (this: Move, world: World) => void;
-	onClient: (this: Move, world: World) => void;
+	onServer: moveFn;
+	otherClients: moveFn;
+	onClient: moveFn;
 }
 
 export const enum Moves {
 	Summon,
 	Barrage,
+	Teleport,
 }
 
 const defaults: Move = {
@@ -30,14 +40,17 @@ const defaults: Move = {
 
 	onClient(this) {
 		warn("OnClient not implemented for move " + this.name);
+		return false;
 	},
 
 	otherClients(this) {
 		warn("OtherClients not implemented for move " + this.name);
+		return false;
 	},
 
 	onServer(this) {
 		warn("OnServer not implemented for move " + this.name);
+		return false;
 	},
 };
 
@@ -47,8 +60,8 @@ export const MoveData: { [index in Moves]: Partial<Move> } = {
 		cooldown: 0.5,
 		keybind: "Summon",
 	},
-
 	[Moves.Barrage]: {},
+	[Moves.Teleport]: Teleport,
 };
 
 export function MergeMove(move: Moves, overrides: Partial<Move>) {

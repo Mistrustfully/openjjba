@@ -1,6 +1,8 @@
-// SPDX-FileCopyrightText: 2022 Christian Fletcher <mistrustfully@gmail.com>
+// SPDX-FileCopyrightText: 2022 Ukendio
 //
-// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: MIT
+
+/// https://github.com/Ukendio/for-animia/blob/master/src/shared/systems/removingMissingModels.ts
 
 import { useEvent, World } from "@rbxts/matter";
 import { Renderable } from "shared/components";
@@ -9,8 +11,8 @@ function RemoveMissingModels(world: World) {
 	for (const [id, { model }] of world.query(Renderable)) {
 		for (const [_] of useEvent(model, "AncestryChanged")) {
 			if (model.IsDescendantOf(game) === false) {
-				world.remove(id, Renderable);
-				break;
+				world.despawn(id);
+				return;
 			}
 		}
 

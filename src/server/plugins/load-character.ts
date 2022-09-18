@@ -3,8 +3,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import { World } from "@rbxts/matter";
+import { BuildRagdollConstraints, SetRagdollEnabled } from "@rbxts/r15-ragdoll";
 import { Players, ReplicatedStorage, Workspace } from "@rbxts/services";
-import { Renderable } from "shared/components";
+import { PlayerLike, Renderable } from "shared/components";
 
 function GetR6PartFromR15(r15part: Enum.BodyPartR15): Enum.BodyPart | undefined {
 	switch (r15part) {
@@ -69,7 +70,7 @@ export function LoadCharaterRig(world: World) {
 		});
 
 		player.CharacterAdded.Connect((character) => {
-			world.spawn(Renderable({ model: character }));
+			world.spawn(Renderable({ model: character }), PlayerLike());
 		});
 	});
 }

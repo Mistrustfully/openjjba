@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import { World } from "@rbxts/matter";
-import { Workspace } from "@rbxts/services";
+import { AnyEntity, World } from "@rbxts/matter";
+import { RunService, Workspace } from "@rbxts/services";
 import { Hitbox, Renderable } from "shared/components";
 
 function HitboxesCollide(world: World) {
@@ -21,12 +21,15 @@ function HitboxesCollide(world: World) {
 				? Workspace.GetPartBoundsInRadius(hitbox.position, hitbox.size, overlapParams)
 				: Workspace.GetPartBoundsInBox(hitbox.position, hitbox.size, overlapParams);
 
-		const models: Model[] = [];
+		const models: AnyEntity[] = [];
 		result.forEach((v) => {
 			const model = v.FindFirstAncestorOfClass("Model");
 
-			if (model && model.FindFirstChildOfClass("Humanoid") && !models.includes(model)) {
-				models.push(model);
+			if (model && model.FindFirstChildOfClass("Humanoid")) {
+				const id = model.GetAttribute(RunService.IsServer() ? "id" : "c_id") as AnyEntity | undefined;
+				if (id !== undefined && !models.includes(id)) {
+					models.push(id);
+				}
 			}
 		});
 

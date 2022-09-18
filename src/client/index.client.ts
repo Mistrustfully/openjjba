@@ -32,8 +32,6 @@ const state: IClientState = {
 		ActionGhosting: 1,
 	}),
 	InputActions: DefaultKeybinds,
-
-	Moveset: StandMoves[PlayerData.stand.id],
 };
 
 start([script.systems, ReplicatedStorage.shared.systems], state)(ReceiveReplication, CreateUI, RecieveDatastoreChanges);

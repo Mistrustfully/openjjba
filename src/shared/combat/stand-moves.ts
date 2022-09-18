@@ -7,5 +7,5 @@ import { Move, MoveData, Moves, MergeMove } from "./moves";
 
 export const StandMoves: { [index in Stand]: Move[] } = {
 	[Stand.Standless]: [],
-	[Stand.ZaShadow]: [MergeMove(Moves.Summon, { cooldown: 5 })],
+	[Stand.ZaShadow]: [MergeMove(Moves.Summon, { cooldown: 5 }), MergeMove(Moves.Teleport, {})],
 };

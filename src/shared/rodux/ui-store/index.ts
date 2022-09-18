@@ -5,6 +5,7 @@
 import Rodux from "@rbxts/rodux";
 import { PickupReducer, UpdatePickupUIAction } from "./pickup-reducer";
 import { LockOnReducer, SetTargetAction } from "./lock-on-reducer";
+import { MusicReducer, SetPlayingMusic } from "./music-reducer";
 
 export interface IUIStore {
 	Pickup: {
@@ -16,13 +17,19 @@ export interface IUIStore {
 	LockOn: {
 		Target?: Model;
 	};
+
+	Music: {
+		name: string;
+		artist: string;
+	};
 }
 
-type StoreActions = UpdatePickupUIAction | SetTargetAction;
+type StoreActions = UpdatePickupUIAction | SetTargetAction | SetPlayingMusic;
 
 const reducer = Rodux.combineReducers<IUIStore, StoreActions>({
 	Pickup: PickupReducer,
 	LockOn: LockOnReducer,
+	Music: MusicReducer,
 });
 
 export function CreateUIStore() {

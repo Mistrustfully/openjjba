@@ -8,7 +8,6 @@ import { UIStore } from "shared/rodux/ui-store";
 import { Context } from "@rbxts/gamejoy/";
 import { ContextOptions } from "@rbxts/gamejoy/out/Definitions/Types";
 import { DefaultKeybinds } from "shared/default-keybinds";
-import { Move } from "shared/combat/moves";
 
 export interface IClientState {
 	debugEnabled: boolean;
@@ -22,7 +21,7 @@ export interface IClientState {
 	GamejoyContext: Context<ContextOptions>;
 	InputActions: typeof DefaultKeybinds;
 
-	Moveset: Move[];
+	Music?: Sound;
 }
 
 export interface IServerState {

@@ -4,6 +4,7 @@
 
 import { World } from "@rbxts/matter";
 import Plasma from "@rbxts/plasma";
+import { RunService } from "@rbxts/services";
 import { Hitbox } from "shared/components";
 import { IClientState } from "shared/types/state";
 

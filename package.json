@@ -32,6 +32,8 @@
 		"@rbxts/net": "^3.0.3",
 		"@rbxts/plasma": "^0.4.1-ts.0",
 		"@rbxts/profileservice": "^1.4.1",
+		"@rbxts/r15-ragdoll": "^1.0.0",
+		"@rbxts/rbxts-ragdoll": "file:../rbxts-ragdoll/rbxts-rbxts-ragdoll-1.0.0.tgz",
 		"@rbxts/rewire": "^0.3.0",
 		"@rbxts/roact": "^1.4.2-ts.3",
 		"@rbxts/roact-hooked": "^2.1.2",
