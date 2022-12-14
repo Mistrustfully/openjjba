@@ -38,7 +38,7 @@ function Pickup(): Element {
 	);
 
 	return (
-		<screengui>
+		<screengui ResetOnSpawn={false}>
 			<imagelabel
 				ImageTransparency={transparencyBinding.getValue()}
 				Image={"http://www.roblox.com/asset/?id=10833055585"}

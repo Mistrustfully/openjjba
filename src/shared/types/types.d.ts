@@ -21,13 +21,10 @@ declare global {
 				Roka: ItemModel;
 				PocketWatch: ItemModel;
 			};
-		};
-	}
 
-	interface Workspace extends WorldRoot {
-		Dummies: Folder &
-			(Model & {
-				HumanoidRootPart: BasePart;
-			})[];
+			CharacterRig: Model & {
+				Humanoid: Humanoid;
+			};
+		};
 	}
 }

@@ -21,7 +21,7 @@ export interface IPlayerData {
 	playtime: number;
 	join_date: number;
 
-	ban_data?: IBanData;
+	ban_data: IBanData;
 }
 
 export const DefaultPlayerData: IPlayerData = {
@@ -43,4 +43,9 @@ export const DefaultPlayerData: IPlayerData = {
 
 	playtime: 0,
 	join_date: 0,
+	ban_data: {
+		reason: "",
+		unban_date: 0,
+		ban_history: [],
+	},
 };

@@ -2,48 +2,39 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import { AnyEntity, World } from "@rbxts/matter";
+import { World } from "@rbxts/matter";
 import ProfileService from "@rbxts/profileservice";
-import { Profile } from "@rbxts/profileservice/globals";
 import { Players } from "@rbxts/services";
-import { PlayerComponent, PlayerData, PlayerLike, Renderable } from "shared/components";
+import Remotes from "shared/remotes";
+import { CreateDataRoduxStore } from "shared/rodux/data-store";
 import { DefaultPlayerData, IPlayerData } from "shared/types/player-data";
-
-export const PlayerProfiles = new Map<Player, Profile<IPlayerData>>();
-export const PlayerEntity = new Map<Player, AnyEntity>();
+import { IServerState } from "shared/types/state";
 
 const ProfileStore = ProfileService.GetProfileStore("v.2-b", DefaultPlayerData);
+const GetDataStoreInitialState = Remotes.Server.Get("GetDataRoduxStoreInitialData");
 
-export function LoadPlayerData(world: World) {
+export function LoadPlayerData(_: World, state: IServerState) {
 	function PlayerAdded(player: Player) {
 		const profile = ProfileStore.LoadProfileAsync(`Player_${player.UserId}`);
 		if (profile) {
-			print(profile.Data.playtime);
 			profile.AddUserId(player.UserId);
 			profile.Reconcile();
 
 			if (player.IsDescendantOf(Players)) {
 				InitPlayerData(player, profile.Data);
-
-				const entity = world.spawn(PlayerData(profile.Data), PlayerComponent({ player: player }), PlayerLike());
-				if (player.Character) {
-					world.insert(entity, Renderable({ model: player.Character }));
-				}
-
-				PlayerEntity.set(player, entity);
-				PlayerProfiles.set(player, profile);
+				state.PlayerData.set(player, CreateDataRoduxStore(profile.Data, player));
 			} else {
-				UnloadPlayerData(world, player, true);
+				UnloadPlayerData(state, player, true);
 			}
 
 			profile.ListenToRelease(() => {
-				UnloadPlayerData(world, player, true);
+				UnloadPlayerData(state, player, true);
 			});
 		}
 	}
 
 	function PlayerRemoving(player: Player) {
-		UnloadPlayerData(world, player);
+		UnloadPlayerData(state, player);
 	}
 
 	Players.GetPlayers().forEach((player) => {
@@ -52,16 +43,14 @@ export function LoadPlayerData(world: World) {
 
 	Players.PlayerAdded.Connect(PlayerAdded);
 	Players.PlayerRemoving.Connect(PlayerRemoving);
+
+	GetDataStoreInitialState.SetCallback((player) => {
+		return state.PlayerData.get(player)!.getState();
+	});
 }
 
-function UnloadPlayerData(world: World, player: Player, force?: boolean) {
-	PlayerProfiles.delete(player);
-
-	const entity = PlayerEntity.get(player);
-	if (entity !== undefined) {
-		world.despawn(entity);
-		PlayerEntity.delete(player);
-	}
+function UnloadPlayerData(state: IServerState, player: Player, force?: boolean) {
+	state.PlayerData.delete(player);
 
 	if (force) {
 		player.Kick();

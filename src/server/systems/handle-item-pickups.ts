@@ -3,13 +3,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import { AnyEntity, useEvent, World } from "@rbxts/matter";
-import { PlayerEntity } from "server/plugins/load-player-data";
-import { ItemComponent, PlayerData } from "shared/components";
+import { ItemComponent } from "shared/components";
 import Remotes from "shared/remotes";
+import { IServerState } from "shared/types/state";
 
 const PickupItem = Remotes.Server.Get("PickupItem");
 
-function HandleItemPickups(world: World) {
+function HandleItemPickups(world: World, state: IServerState) {
 	for (const [_, player, itemId] of useEvent("PickupItem", PickupItem)) {
 		const entityId = tonumber(itemId) as AnyEntity;
 		if (!world.contains(entityId)) return;
@@ -17,14 +17,15 @@ function HandleItemPickups(world: World) {
 		const item = world.get(entityId, ItemComponent);
 
 		if (item) {
-			const playerEntity = PlayerEntity.get(player);
-			if (playerEntity === undefined) return;
-
-			const data = world.get(playerEntity, PlayerData);
-			if (!data) return;
-
 			// TODO: Check if the player is near enough to pick the item up.
-			world.insert(playerEntity, data.patch({ inventory: [...data.inventory, { item: item.id }] }));
+			const playerData = state.PlayerData.get(player);
+			if (!playerData) return;
+
+			playerData.dispatch({
+				type: "AddItemAction",
+				item: { item: item.id },
+			});
+
 			world.despawn(entityId);
 		}
 	}

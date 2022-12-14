@@ -3,15 +3,17 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import { World } from "@rbxts/matter";
+import { RunService } from "@rbxts/services";
 import { Renderable } from "shared/components";
 
 function SetEntityAttributes(world: World) {
 	for (const [id, model] of world.queryChanged(Renderable)) {
+		if (model.old) {
+			model.old.model.SetAttribute("id", undefined);
+		}
+
 		if (model.new) {
-			model.new.model.SetAttribute("id", id);
-			if (model.old) {
-				model.old.model.SetAttribute("id", undefined);
-			}
+			model.new.model.SetAttribute(RunService.IsServer() ? "id" : "c_id", id);
 		}
 	}
 }

@@ -12,13 +12,12 @@ interface storage<T extends Motors> {
 
 function cleanup<T extends Motors>(storage: storage<T>) {
 	storage.motor?.destroy();
-	print("cleanup");
 }
 
-export function useMotor(goal: Spring, initial?: number) {
-	const storage = useHookState<storage<SingleMotor>>(cleanup);
+export function useMotor(goal: Spring, initial: number, discrim?: unknown) {
+	const storage = useHookState<storage<SingleMotor>>(discrim, cleanup);
 	if (storage.motor === undefined) {
-		storage.motor = new SingleMotor(initial === undefined ? 0 : initial);
+		storage.motor = new SingleMotor(initial);
 	}
 
 	storage.motor.setGoal(goal);
@@ -27,8 +26,8 @@ export function useMotor(goal: Spring, initial?: number) {
 	return storage.motor.getValue();
 }
 
-export function useGroupMotor(goal: Spring[], initial: number[]) {
-	const storage = useHookState<storage<GroupMotor<number[]>>>(cleanup);
+export function useGroupMotor(goal: Spring[], initial: number[], discrim?: unknown) {
+	const storage = useHookState<storage<GroupMotor<number[]>>>(discrim, cleanup);
 	if (storage.motor === undefined) {
 		storage.motor = new GroupMotor<number[]>(initial);
 	}

@@ -7,23 +7,12 @@
 import { AnyComponent, useEvent, World } from "@rbxts/matter";
 import { ComponentCtor } from "@rbxts/matter/lib/component";
 import { Players } from "@rbxts/services";
-import {
-	Blocking,
-	ItemComponent,
-	PlayerComponent,
-	PlayerData,
-	Renderable,
-	StandRig,
-	PlayerLike,
-	Dodging,
-} from "shared/components";
+import { Blocking, ItemComponent, Renderable, StandRig, PlayerLike, Dodging } from "shared/components";
 import Remotes, { ComponentPayload } from "shared/remotes";
 import type { ComponentNames } from "shared/types/serde";
 
 const ReplicateRemote = Remotes.Server.Get("Replication");
 const ReplicatedComponents = new Set<ComponentCtor>([
-	PlayerComponent,
-	PlayerData,
 	PlayerLike,
 
 	Renderable,
